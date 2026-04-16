@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍔 Food Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0f0e0c;
+            --card: #1a1814;
+            --accent: #e8a832;
+            --accent2: #d45f2e;
+            --text: #f0ece3;
+            --muted: #7a7568;
+            --border: #2e2b24;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #1a1814 0%, #0f0e0c 60%);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(232,168,50,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+        .logo span { color: var(--accent); }
+        .logo small {
+            display: block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .food-count {
+            background: var(--accent);
+            color: #0f0e0c;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            border-radius: 999px;
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* ADD FORM */
+        .add-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        .form-grid input {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-grid input::placeholder { color: var(--muted); }
+        .form-grid input:focus { border-color: var(--accent); }
+        .form-grid input.full { grid-column: 1 / -1; }
+        .btn-add {
+            grid-column: 1 / -1;
+            background: var(--accent);
+            color: #0f0e0c;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-add:hover { background: #f0b83a; transform: translateY(-1px); }
+        .btn-add:active { transform: translateY(0); }
+
+        /* FOOD GRID */
+        .grid-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .grid-label em { color: var(--accent); font-style: normal; }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .food-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.25s, border-color 0.25s;
+        }
+        .food-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        .food-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background: var(--border);
+        }
+        .food-img-placeholder {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--border);
+            font-size: 3rem;
+        }
+        .food-body {
+            padding: 1.2rem;
+        }
+        .food-cat {
+            font-size: 0.68rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent2);
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+        }
+        .food-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .food-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .food-price span { font-size: 0.9rem; color: var(--muted); }
+        .food-actions {
+            display: flex;
+            gap: 0.6rem;
+        }
+        .btn-edit, .btn-delete {
+            flex: 1;
+            text-align: center;
+            padding: 0.55rem 0;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: opacity 0.2s;
+        }
+        .btn-edit {
+            background: rgba(232,168,50,0.15);
+            color: var(--accent);
+            border: 1px solid rgba(232,168,50,0.3);
+        }
+        .btn-edit:hover { background: rgba(232,168,50,0.25); }
+        .btn-delete {
+            background: rgba(212, 95, 46, 0.15);
+            color: var(--accent2);
+            border: 1px solid rgba(212,95,46,0.3);
+        }
+        .btn-delete:hover { background: rgba(212,95,46,0.25); }
+
+        /* EMPTY STATE */
+        .empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--muted);
+        }
+        .empty-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .empty p { font-size: 1rem; }
+
+        @media (max-width: 600px) {
+            .logo { font-size: 2rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-grid input.full { grid-column: 1; }
+            .btn-add { grid-column: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            🍔 Food<span>Shop</span>
+            <small>เว็บขายอาหาร · CRUD System</small>
+        </div>
+        <div class="food-count">{{ foods|length }} รายการ</div>
+    </div>
+</header>
+
+<main>
+    <!-- ADD FORM -->
+    <div class="add-section">
+        <div class="section-label">➕ เพิ่มเมนูอาหารใหม่</div>
+        <form action="/add" method="POST">
+            <div class="form-grid">
+                <input type="text" name="name" placeholder="ชื่ออาหาร (เช่น Cheeseburger)" required>
+                <input type="text" name="category" placeholder="หมวดหมู่ (เช่น Burger, Pizza)" required>
+                <input type="number" name="price" placeholder="ราคา (บาท)" step="0.01" min="0" required>
+                <input type="text" name="image" placeholder="URL รูปภาพ (จาก Unsplash หรืออื่นๆ)">
+                <button type="submit" class="btn-add">+ เพิ่มเมนูอาหาร</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FOOD LIST -->
+    <div class="grid-label">เมนู<em>ทั้งหมด</em></div>
+
+    {% if foods %}
+    <div class="food-grid">
+        {% for food in foods %}
+        <div class="food-card">
+            {% if food.image %}
+            <img class="food-img" src="{{ food.image }}" alt="{{ food.name }}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="food-img-placeholder" style="display:none">🍽️</div>
+            {% else %}
+            <div class="food-img-placeholder">🍽️</div>
+            {% endif %}
+            <div class="food-body">
+                <div class="food-cat">{{ food.category }}</div>
+                <div class="food-name">{{ food.name }}</div>
+                <div class="food-price">฿{{ "%.2f"|format(food.price) }} <span>บาท</span></div>
+                <div class="food-actions">
+                    <a href="/edit/{{ food.id }}" class="btn-edit">✏️ แก้ไข</a>
+                    <a href="/delete/{{ food.id }}" class="btn-delete" onclick="return confirm('ลบ {{ food.name }} ?')">🗑️ ลบ</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">
+        <div class="empty-icon">🍽️</div>
+        <p>ยังไม่มีเมนูอาหาร — เพิ่มรายการแรกด้านบนได้เลย!</p>
+    </div>
+    {% endif %}
+</main>
+
+</body>
+</html>
