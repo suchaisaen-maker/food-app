@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แก้ไขเมนู · Food Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0f0e0c; --card: #1a1814; --accent: #e8a832;
+            --accent2: #d45f2e; --text: #f0ece3; --muted: #7a7568; --border: #2e2b24;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2.5rem; width: 100%; max-width: 480px;
+        }
+        .back { color: var(--muted); text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.5rem; transition: color 0.2s; }
+        .back:hover { color: var(--accent); }
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.3rem; }
+        .sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+        label { display: block; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; margin-top: 1rem; }
+        input {
+            width: 100%; background: var(--bg); border: 1px solid var(--border);
+            color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+            padding: 0.85rem 1rem; border-radius: 8px; outline: none; transition: border-color 0.2s;
+        }
+        input:focus { border-color: var(--accent); }
+        .actions { display: flex; gap: 0.8rem; margin-top: 1.8rem; }
+        .btn-save {
+            flex: 1; background: var(--accent); color: #0f0e0c; border: none;
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem;
+            padding: 0.9rem; border-radius: 8px; cursor: pointer; transition: background 0.2s;
+        }
+        .btn-save:hover { background: #f0b83a; }
+        .btn-cancel {
+            flex: 1; text-align: center; line-height: 2.8rem;
+            background: transparent; color: var(--muted); border: 1px solid var(--border);
+            border-radius: 8px; text-decoration: none; font-size: 0.9rem; transition: color 0.2s, border-color 0.2s;
+        }
+        .btn-cancel:hover { color: var(--text); border-color: var(--text); }
+    </style>
+</head>
+<body>
+<div class="card">
+    <a href="/" class="back">← กลับหน้าหลัก</a>
+    <h1>✏️ แก้ไขเมนู</h1>
+    <p class="sub">แก้ไขข้อมูลของ "{{ food.name }}"</p>
+    <form method="POST">
+        <label>ชื่ออาหาร</label>
+        <input type="text" name="name" value="{{ food.name }}" required>
+        <label>หมวดหมู่</label>
+        <input type="text" name="category" value="{{ food.category }}" required>
+        <label>ราคา (บาท)</label>
+        <input type="number" name="price" value="{{ food.price }}" step="0.01" min="0" required>
+        <label>URL รูปภาพ</label>
+        <input type="text" name="image" value="{{ food.image or '' }}">
+        <div class="actions">
+            <button type="submit" class="btn-save">💾 บันทึก</button>
+            <a href="/" class="btn-cancel">ยกเลิก</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
